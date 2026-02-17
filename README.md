@@ -49,27 +49,28 @@ Next phases include:
 
 ## Project Structure
 
+```
 ai_analytics_engine/
 │
-│
 ├── config/
+│   └── simulation.yaml
 │
 ├── src/
-│
-│ ├── simulation/
-  │
-  │
-│ └── validators/
+│   ├── simulation/
+│   │   ├── __init__.py
+│   │   ├── config.py
+│   │   └── utils.py
+│   │
+│   └── validators/
 │
 ├── tests/
+│   └── test_simulation_integrity.py
 │
 ├── generate_data.py
-│
 ├── requirements.txt
-│
 ├── pytest.ini
-│
 └── README.md
+```
 
 
 ---
