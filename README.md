@@ -53,9 +53,13 @@ ai_analytics_engine/
 
 │
 ├── config/
+
 ├── src/
+
 │ ├── simulation/
+
 │ └── validators/
+
 ├── tests/
 ├── generate_data.py
 ├── requirements.txt
