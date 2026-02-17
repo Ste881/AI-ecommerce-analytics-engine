@@ -50,6 +50,7 @@ Next phases include:
 ## Project Structure
 
 ai_analytics_engine/
+
 │
 ├── config/
 ├── src/
