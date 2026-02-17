@@ -49,11 +49,9 @@ Next phases include:
 
 ## Project Structure
 
-ai_analytics_engine/
-
+ai_analytics_engine /
 │
-├── config/
-
+├── config /
 ├── src/
 
 │ ├── simulation/
