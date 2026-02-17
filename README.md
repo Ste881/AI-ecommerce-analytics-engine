@@ -26,11 +26,11 @@ This engine simulates how an internal analytics team would automate those insigh
 
 ## Current Phase
 
-✅ Config-driven simulation foundation  
-✅ Deterministic random seed  
-✅ Modular architecture  
-✅ Logging system  
-✅ Pytest testing framework  
+- Config-driven simulation foundation  
+- Deterministic random seed  
+- Modular architecture  
+- Logging system  
+- Pytest testing framework  
 
 Next phases include:
 
