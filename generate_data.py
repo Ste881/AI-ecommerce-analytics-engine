@@ -1,5 +1,9 @@
+import os
+
 from src.simulation.config import load_config
 from src.simulation.utils import setup_logger, generate_date_range
+from src.simulation.products import generate_products
+from src.simulation.customers import generate_customers
 
 
 def main():
@@ -25,7 +29,30 @@ def main():
     print("=" * 60)
 
     logger.info(f"Generated {len(dates)} simulation days.")
-    logger.info("Initialization complete.")
+
+    # -------------------------
+    # Generate Products
+    # -------------------------
+    products_df = generate_products(config)
+    logger.info("Products generated.")
+
+    # -------------------------
+    # Generate Customers
+    # -------------------------
+    customers_df = generate_customers(config)
+    logger.info("Customers generated.")
+
+    # -------------------------
+    # Save to CSV
+    # -------------------------
+    os.makedirs("data", exist_ok=True)
+
+    products_df.to_csv("data/products.csv", index=False)
+    customers_df.to_csv("data/customers.csv", index=False)
+
+    logger.info("Products and customers CSV files created.")
+
+    print("Products and Customers generated successfully.")
 
 
 if __name__ == "__main__":
