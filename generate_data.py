@@ -4,6 +4,8 @@ from src.simulation.config import load_config
 from src.simulation.utils import setup_logger, generate_date_range
 from src.simulation.products import generate_products
 from src.simulation.customers import generate_customers
+from src.simulation.traffic import generate_traffic
+
 
 
 def main():
@@ -41,6 +43,15 @@ def main():
     # -------------------------
     customers_df = generate_customers(config)
     logger.info("Customers generated.")
+
+    # -------------------------
+    # Generate Website Traffic
+    # -------------------------
+    traffic_df = generate_traffic(config)
+    logger.info("Website traffic generated.")
+
+    traffic_df.to_csv("data/website_traffic.csv", index=False)
+
 
     # -------------------------
     # Save to CSV
