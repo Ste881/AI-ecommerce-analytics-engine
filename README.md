@@ -24,13 +24,25 @@ This engine simulates how an internal analytics team would automate those insigh
 
 ---
 
-## Current Phase
 
-- Config-driven simulation foundation  
-- Deterministic random seed  
-- Modular architecture  
-- Logging system  
-- Pytest testing framework  
+## Current Architecture
+
+### Simulation Layer
+- Config-driven data generation
+- Product simulation with pricing & inventory
+- Customer simulation
+- Website traffic modeling (seasonality + growth)
+- Order generation (dynamic conversion modeling)
+
+### Analytics Layer
+- KPI computation engine
+- Revenue, AOV, conversion rate metrics
+- Channel performance breakdown
+- Monthly revenue trend analysis
+- Structured LLM-ready insight generation
+
+This system now simulates a full internal analytics pipeline:
+Traffic → Orders → KPIs → Structured Insights
 
 Next phases include:
 
@@ -50,26 +62,49 @@ Next phases include:
 ## Project Structure
 
 ```
+## Architecture Overview
+
 ai_analytics_engine/
 │
 ├── config/
-│   └── simulation.yaml
+│   └── simulation.yaml                # Central configuration (dates, entities, traffic, conversion, anomalies)
+│
+├── data/                              # Generated datasets (ignored in Git)
+│   ├── products.csv
+│   ├── customers.csv
+│   ├── website_traffic.csv
+│   └── orders.csv
+│
+├── logs/                              # Runtime logs (ignored in Git)
 │
 ├── src/
-│   ├── simulation/
+│   ├── simulation/                    # Data Simulation Layer
 │   │   ├── __init__.py
-│   │   ├── config.py
-│   │   └── utils.py
+│   │   ├── config.py                  # YAML loader & config abstraction
+│   │   ├── utils.py                   # Shared utilities (dates, logging)
+│   │   ├── products.py                # Product catalog simulation
+│   │   ├── customers.py               # Customer base simulation
+│   │   ├── traffic.py                 # Website traffic modeling (seasonality + growth)
+│   │   └── orders.py                  # Dynamic order generation (conversion modeling)
 │   │
-│   └── validators/
+│   └── analytics/                     # Analytics & Intelligence Layer
+│       ├── __init__.py
+│       ├── kpis.py                    # KPI computation engine
+│       └── insights_engine.py         # Structured LLM-ready insight generation
 │
-├── tests/
+├── tests/                             # Unit testing layer
 │   └── test_simulation_integrity.py
 │
-├── generate_data.py
-├── requirements.txt
-├── pytest.ini
+├── generate_data.py                   # Orchestration entry point (pipeline runner)
+├── requirements.txt                   # Project dependencies
+├── pytest.ini                         # Test configuration
 └── README.md
+
+The system is modular and layered:
+
+1. Simulation Layer → Generates realistic business data.
+2. Analytics Layer → Computes KPIs and structured insights.
+3. Future Layer (Planned) → API, anomaly detection, dashboard.
 ```
 
 
@@ -85,6 +120,8 @@ ai_analytics_engine/
 - PostgreSQL (planned)
 - FastAPI (planned)
 - Docker (planned)
+- Structured insight engine (LLM-ready JSON output)
+- Modular analytics architecture
 
 ---
 
