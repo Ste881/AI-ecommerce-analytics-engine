@@ -59,4 +59,18 @@ def generate_orders(config, traffic_df, products_df, customers_df):
 
     orders_df = pd.DataFrame(order_rows)
 
+    if "revenue_events" in config.raw:
+        for event_name, event in config.raw["revenue_events"].items():
+            start = pd.to_datetime(event["start"])
+            end = pd.to_datetime(event["end"])
+            multiplier = event["multiplier"]
+
+            mask = (
+                (pd.to_datetime(orders_df["order_date"]) >= start) &
+                (pd.to_datetime(orders_df["order_date"]) <= end)
+            )
+
+            orders_df.loc[mask, "order_value"] *= multiplier
+
+
     return orders_df

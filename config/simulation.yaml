@@ -35,3 +35,14 @@ anomalies:
     start: "2025-06-10"
     end: "2025-06-15"
     drop_pct: 0.4
+
+revenue_events:
+  flash_sale:
+    start: "2025-03-15"
+    end: "2025-03-16"
+    multiplier: 1.7
+
+  payment_outage:
+    start: "2025-09-10"
+    end: "2025-09-12"
+    multiplier: 0.5
