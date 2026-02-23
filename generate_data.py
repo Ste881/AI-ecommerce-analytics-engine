@@ -5,6 +5,7 @@ from src.simulation.utils import setup_logger, generate_date_range
 from src.simulation.products import generate_products
 from src.simulation.customers import generate_customers
 from src.simulation.traffic import generate_traffic
+from src.simulation.orders import generate_orders
 
 
 
@@ -51,6 +52,14 @@ def main():
     logger.info("Website traffic generated.")
 
     traffic_df.to_csv("data/website_traffic.csv", index=False)
+
+    # -------------------------
+    # Generate Orders
+    # -------------------------
+    orders_df = generate_orders(config, traffic_df, products_df, customers_df)
+    logger.info("Orders generated.")
+
+    orders_df.to_csv("data/orders.csv", index=False)
 
 
     # -------------------------
