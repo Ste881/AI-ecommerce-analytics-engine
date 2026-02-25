@@ -1,4 +1,8 @@
-def generate_structured_insights(kpis: dict):
+def generate_structured_insights(
+    kpis: dict,
+    statistical_anomalies_df=None,
+    ml_anomalies_df=None
+):
     insights = {}
 
     total_revenue = float(kpis["total_revenue"])
@@ -64,6 +68,36 @@ def generate_structured_insights(kpis: dict):
         "lowest_revenue": round(min(values), 2)
     }
 
+    # -------- Anomaly Analysis --------
+    anomaly_analysis = {
+        "statistical_anomalies": [],
+        "ml_anomalies": [],
+        "overlap_days": []
+    }
+
+    if statistical_anomalies_df is not None:
+        stat_days = statistical_anomalies_df[
+            statistical_anomalies_df["is_anomaly"]
+        ]["date"].astype(str).tolist()
+
+        anomaly_analysis["statistical_anomalies"] = stat_days
+    else:
+        stat_days = []
+
+    if ml_anomalies_df is not None:
+        ml_days = ml_anomalies_df[
+            ml_anomalies_df["ml_anomaly_flag"]
+        ]["date"].astype(str).tolist()
+
+        anomaly_analysis["ml_anomalies"] = ml_days
+    else:
+        ml_days = []
+
+    overlap = list(set(stat_days).intersection(set(ml_days)))
+    anomaly_analysis["overlap_days"] = overlap
+
+    insights["anomaly_analysis"] = anomaly_analysis
+
     # -------- Alerts --------
     alerts = []
 
@@ -72,6 +106,9 @@ def generate_structured_insights(kpis: dict):
 
     if conversion_rate < 0.02:
         alerts.append("Conversion rate below expected baseline.")
+
+    if len(overlap) > 0:
+        alerts.append("Critical anomaly detected by both statistical and ML models.")
 
     insights["alerts"] = alerts
 
