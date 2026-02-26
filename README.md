@@ -109,11 +109,6 @@ The system is modular and layered:
 3. Multi-Model Consensus Layer → Confirms anomalies across statistical, ML, and forecasting systems.
 4. Future Layer (Planned) → API service, database integration, dashboard, Dockerization.
 
-The system is modular and layered:
-
-1. Simulation Layer → Generates realistic business data.
-2. Analytics Layer → Computes KPIs and structured insights.
-3. Future Layer (Planned) → API, anomaly detection, dashboard.
 ```
 
 ---
