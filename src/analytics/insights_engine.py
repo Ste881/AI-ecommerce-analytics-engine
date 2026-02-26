@@ -1,7 +1,8 @@
 def generate_structured_insights(
     kpis: dict,
     statistical_anomalies_df=None,
-    ml_anomalies_df=None
+    ml_anomalies_df=None,
+    forecast_residual_df=None
 ):
     insights = {}
 
@@ -68,33 +69,49 @@ def generate_structured_insights(
         "lowest_revenue": round(min(values), 2)
     }
 
-    # -------- Anomaly Analysis --------
+        # -------- Anomaly Analysis --------
     anomaly_analysis = {
         "statistical_anomalies": [],
         "ml_anomalies": [],
-        "overlap_days": []
+        "forecast_residual_anomalies": [],
+        "overlap_stat_ml": [],
+        "overlap_stat_forecast": [],
+        "overlap_ml_forecast": [],
+        "triple_overlap": []
     }
+
+    stat_days = []
+    ml_days = []
+    forecast_days = []
 
     if statistical_anomalies_df is not None:
         stat_days = statistical_anomalies_df[
             statistical_anomalies_df["is_anomaly"]
         ]["date"].astype(str).tolist()
-
         anomaly_analysis["statistical_anomalies"] = stat_days
-    else:
-        stat_days = []
 
     if ml_anomalies_df is not None:
         ml_days = ml_anomalies_df[
             ml_anomalies_df["ml_anomaly_flag"]
         ]["date"].astype(str).tolist()
-
         anomaly_analysis["ml_anomalies"] = ml_days
-    else:
-        ml_days = []
 
-    overlap = list(set(stat_days).intersection(set(ml_days)))
-    anomaly_analysis["overlap_days"] = overlap
+    if forecast_residual_df is not None:
+        forecast_days = forecast_residual_df[
+            forecast_residual_df["forecast_anomaly"]
+        ]["ds"].astype(str).tolist()
+        anomaly_analysis["forecast_residual_anomalies"] = forecast_days
+
+    stat_set = set(stat_days)
+    ml_set = set(ml_days)
+    forecast_set = set(forecast_days)
+
+    anomaly_analysis["overlap_stat_ml"] = list(stat_set.intersection(ml_set))
+    anomaly_analysis["overlap_stat_forecast"] = list(stat_set.intersection(forecast_set))
+    anomaly_analysis["overlap_ml_forecast"] = list(ml_set.intersection(forecast_set))
+    anomaly_analysis["triple_overlap"] = list(
+        stat_set.intersection(ml_set).intersection(forecast_set)
+    )
 
     insights["anomaly_analysis"] = anomaly_analysis
 
@@ -107,8 +124,14 @@ def generate_structured_insights(
     if conversion_rate < 0.02:
         alerts.append("Conversion rate below expected baseline.")
 
-    if len(overlap) > 0:
-        alerts.append("Critical anomaly detected by both statistical and ML models.")
+    if len(anomaly_analysis["triple_overlap"]) > 0:
+        alerts.append("Critical anomaly confirmed by statistical, ML, and forecasting models.")
+
+    elif len(anomaly_analysis["overlap_stat_ml"]) > 0:
+        alerts.append("High-confidence anomaly detected by statistical and ML models.")
+
+    elif len(forecast_days) > 0:
+        alerts.append("Forecast-based revenue deviation detected.")
 
     insights["alerts"] = alerts
 
