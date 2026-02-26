@@ -16,46 +16,45 @@ E-commerce businesses often struggle to answer:
 
 - Why did revenue change week-over-week?
 - Which acquisition channels are underperforming?
-- Are there unusual traffic or revenue anomalies?
-- What is the 14-day revenue forecast?
-- Which products are at risk of stockout?
+- Are unusual revenue spikes real or noise?
+- Are anomalies confirmed across multiple models?
+- What is the forward-looking revenue forecast?
+- Is actual revenue deviating from expected forecast behavior?
 
-This engine simulates how an internal analytics team would automate those insights.
+This engine simulates how an internal analytics team would automate intelligence, monitoring, and anomaly confirmation.
 
 ---
-
 
 ## Current Architecture
 
 ### Simulation Layer
+
 - Config-driven data generation
-- Product simulation with pricing & inventory
-- Customer simulation
-- Website traffic modeling (seasonality + growth)
-- Order generation (dynamic conversion modeling)
+- Product simulation (pricing, cost, inventory)
+- Customer base simulation
+- Website traffic modeling (seasonality + monthly growth)
+- Dynamic conversion modeling (channel bias + seasonal variation)
+- Revenue shock injection (flash sale, outage simulation)
+- Deterministic random seed for reproducibility
 
 ### Analytics Layer
+
 - KPI computation engine
 - Revenue, AOV, conversion rate metrics
 - Channel performance breakdown
 - Monthly revenue trend analysis
 - Structured LLM-ready insight generation
 
-This system now simulates a full internal analytics pipeline:
-Traffic → Orders → KPIs → Structured Insights
+### Anomaly Detection Systems
 
-Next phases include:
+- Statistical anomaly detection (rolling mean + z-score)
+- ML anomaly detection (Isolation Forest with engineered daily features)
+- Forecast residual anomaly detection (Prophet-based time-series modeling)
+- Multi-model anomaly consensus logic (pairwise + triple overlap confirmation)
 
-- Product & customer simulation
-- Traffic modeling with seasonality
-- Marketing spend correlation
-- Order generation engine
-- Inventory & restocking simulation
-- ETL pipeline with PostgreSQL
-- Forecasting & anomaly detection
-- FastAPI service layer
-- Streamlit dashboard
-- Docker deployment
+This system now simulates a full internal analytics intelligence pipeline:
+
+Traffic → Orders → KPIs → Anomaly Detection → Forecasting → Structured Insights
 
 ---
 
@@ -85,12 +84,15 @@ ai_analytics_engine/
 │   │   ├── products.py                # Product catalog simulation
 │   │   ├── customers.py               # Customer base simulation
 │   │   ├── traffic.py                 # Website traffic modeling (seasonality + growth)
-│   │   └── orders.py                  # Dynamic order generation (conversion modeling)
+│   │   └── orders.py                  # Dynamic order generation (conversion modeling + event injection)
 │   │
 │   └── analytics/                     # Analytics & Intelligence Layer
 │       ├── __init__.py
 │       ├── kpis.py                    # KPI computation engine
-│       └── insights_engine.py         # Structured LLM-ready insight generation
+│       ├── anomaly_detection.py       # Statistical anomaly detection (rolling z-score)
+│       ├── ml_anomaly_detection.py    # Isolation Forest anomaly detection
+│       ├── forecasting.py             # Prophet forecasting + residual anomaly detection
+│       └── insights_engine.py         # Structured LLM-ready insight generation + anomaly consensus logic
 │
 ├── tests/                             # Unit testing layer
 │   └── test_simulation_integrity.py
@@ -103,10 +105,16 @@ ai_analytics_engine/
 The system is modular and layered:
 
 1. Simulation Layer → Generates realistic business data.
+2. Analytics Layer → Computes KPIs, anomalies, forecasts, and structured insights.
+3. Multi-Model Consensus Layer → Confirms anomalies across statistical, ML, and forecasting systems.
+4. Future Layer (Planned) → API service, database integration, dashboard, Dockerization.
+
+The system is modular and layered:
+
+1. Simulation Layer → Generates realistic business data.
 2. Analytics Layer → Computes KPIs and structured insights.
 3. Future Layer (Planned) → API, anomaly detection, dashboard.
 ```
-
 
 ---
 
@@ -116,13 +124,17 @@ The system is modular and layered:
 - NumPy
 - Pandas
 - PyYAML
+- Prophet (Time-Series Forecasting)
+- Scikit-learn (Isolation Forest)
 - Pytest
-- PostgreSQL (planned)
-- FastAPI (planned)
-- Docker (planned)
-- Structured insight engine (LLM-ready JSON output)
+- Structured LLM-ready JSON insight engine
 - Modular analytics architecture
 
 ---
 
+## Planned Infrastructure:
 
+- FastAPI
+- PostgreSQL
+- Docker
+- Streamlit Dashboard
