@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Request
 from src.api.schemas import InsightsResponse
+from src.api.schemas import KPIResponse
 
 router = APIRouter()
 
@@ -16,3 +17,10 @@ def get_insights(request: Request):
     - Alerts
     """
     return request.app.state.analytics.insights
+
+@router.get("/kpis", response_model=KPIResponse)
+def get_kpis(request: Request):
+    """
+    Returns top-level KPI summary.
+    """
+    return request.app.state.analytics.kpis
