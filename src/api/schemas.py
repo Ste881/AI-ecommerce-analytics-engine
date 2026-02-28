@@ -80,3 +80,12 @@ class InsightsResponse(BaseModel):
     seasonality_analysis: SeasonalityAnalysis
     anomaly_analysis: AnomalyAnalysis
     alerts: List[str]
+
+class StatisticalAnomaly(BaseModel):
+    date: str
+    order_value: float
+    z_score: float
+
+
+class StatisticalAnomalyResponse(BaseModel):
+    anomalies: List[StatisticalAnomaly]
