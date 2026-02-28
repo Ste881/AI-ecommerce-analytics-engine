@@ -97,3 +97,25 @@ class MLAnomaly(BaseModel):
 
 class MLAnomalyResponse(BaseModel):
     anomalies: List[MLAnomaly]
+
+class ForecastAnomaly(BaseModel):
+    date: str
+    actual_revenue: float
+    predicted_revenue: float
+    residual_z: float
+
+
+class ForecastAnomalyResponse(BaseModel):
+    anomalies: List[ForecastAnomaly]
+
+from pydantic import BaseModel
+from typing import List
+
+
+class ForecastPoint(BaseModel):
+    date: str
+    predicted_revenue: float
+
+
+class ForecastResponse(BaseModel):
+    forecast: List[ForecastPoint]

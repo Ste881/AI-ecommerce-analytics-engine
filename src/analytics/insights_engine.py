@@ -98,7 +98,7 @@ def generate_structured_insights(
 
     if forecast_residual_df is not None:
         forecast_days = forecast_residual_df[
-            forecast_residual_df["forecast_anomaly"]
+            forecast_residual_df["residual_anomaly_flag"]
         ]["ds"].astype(str).tolist()
         anomaly_analysis["forecast_residual_anomalies"] = forecast_days
 

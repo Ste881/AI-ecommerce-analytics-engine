@@ -47,6 +47,7 @@ def forecast_revenue(model, periods=30):
 def compute_residual_anomalies(revenue_df, forecast_df, z_threshold=2.5):
     """
     Detect anomalies using residual (actual - forecast).
+    Returns full dataframe including anomaly flag.
     """
 
     merged = pd.merge(
@@ -55,8 +56,10 @@ def compute_residual_anomalies(revenue_df, forecast_df, z_threshold=2.5):
         on="ds"
     )
 
+    # Residual
     merged["residual"] = merged["y"] - merged["yhat"]
 
+    # Z-score
     mean_res = merged["residual"].mean()
     std_res = merged["residual"].std()
 
@@ -64,6 +67,9 @@ def compute_residual_anomalies(revenue_df, forecast_df, z_threshold=2.5):
         (merged["residual"] - mean_res) / std_res
     )
 
-    merged["forecast_anomaly"] = merged["residual_z"].abs() > z_threshold
+    # Standardized anomaly flag name
+    merged["residual_anomaly_flag"] = (
+        merged["residual_z"].abs() > z_threshold
+    )
 
     return merged
