@@ -119,3 +119,12 @@ class ForecastPoint(BaseModel):
 
 class ForecastResponse(BaseModel):
     forecast: List[ForecastPoint]
+
+class ConsensusResponse(BaseModel):
+    statistical_anomalies: List[str]
+    ml_anomalies: List[str]
+    forecast_anomalies: List[str]
+    overlap_stat_ml: List[str]
+    overlap_stat_forecast: List[str]
+    overlap_ml_forecast: List[str]
+    triple_overlap: List[str]

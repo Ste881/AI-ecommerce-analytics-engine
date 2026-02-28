@@ -8,7 +8,7 @@ import pandas as pd
 from fastapi import Query
 from src.api.schemas import ForecastResponse, ForecastPoint
 from fastapi import APIRouter, Request, Query
-
+from src.api.schemas import ConsensusResponse
 
 
 router = APIRouter()
@@ -106,3 +106,42 @@ def get_forecast(request: Request, days: int = Query(14, ge=1, le=90)):
     ]
 
     return ForecastResponse(forecast=forecast_points)
+
+@router.get("/anomalies/consensus", response_model=ConsensusResponse)
+def get_anomaly_consensus(request: Request):
+
+    state = request.app.state.analytics
+
+    # Extract anomaly dates
+    stat_dates = (
+        state.stat_anomalies[
+            state.stat_anomalies["is_anomaly"]
+        ]["date"].astype(str).tolist()
+    )
+
+    ml_dates = (
+        state.ml_anomalies[
+            state.ml_anomalies["ml_anomaly_flag"]
+        ]["date"].astype(str).tolist()
+    )
+
+    forecast_dates = (
+        state.forecast_anomalies[
+            state.forecast_anomalies["residual_anomaly_flag"]
+        ]["ds"].astype(str).tolist()
+    )
+
+    # Convert to sets
+    stat_set = set(stat_dates)
+    ml_set = set(ml_dates)
+    forecast_set = set(forecast_dates)
+
+    return ConsensusResponse(
+        statistical_anomalies=stat_dates,
+        ml_anomalies=ml_dates,
+        forecast_anomalies=forecast_dates,
+        overlap_stat_ml=list(stat_set & ml_set),
+        overlap_stat_forecast=list(stat_set & forecast_set),
+        overlap_ml_forecast=list(ml_set & forecast_set),
+        triple_overlap=list(stat_set & ml_set & forecast_set)
+    )
