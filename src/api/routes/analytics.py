@@ -2,6 +2,7 @@ from fastapi import APIRouter, Request
 from src.api.schemas import InsightsResponse
 from src.api.schemas import KPIResponse
 from src.api.schemas import StatisticalAnomalyResponse
+from src.api.schemas import MLAnomalyResponse
 
 
 router = APIRouter()
@@ -38,6 +39,22 @@ def get_statistical_anomalies(request: Request):
             "date": str(row["date"]),
             "order_value": float(row["order_value"]),
             "z_score": float(row["z_score"])
+        }
+        for _, row in filtered.iterrows()
+    ]
+
+    return {"anomalies": results}
+
+@router.get("/anomalies/ml", response_model=MLAnomalyResponse)
+def get_ml_anomalies(request: Request):
+    df = request.app.state.analytics.ml_anomalies
+
+    filtered = df[df["ml_anomaly_flag"]]
+
+    results = [
+        {
+            "date": str(row["date"]),
+            "order_value": float(row["order_value"])
         }
         for _, row in filtered.iterrows()
     ]

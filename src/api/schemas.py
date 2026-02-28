@@ -89,3 +89,11 @@ class StatisticalAnomaly(BaseModel):
 
 class StatisticalAnomalyResponse(BaseModel):
     anomalies: List[StatisticalAnomaly]
+
+class MLAnomaly(BaseModel):
+    date: str
+    order_value: float
+
+
+class MLAnomalyResponse(BaseModel):
+    anomalies: List[MLAnomaly]
