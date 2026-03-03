@@ -9,6 +9,7 @@ from fastapi import Query
 from src.api.schemas import ForecastResponse, ForecastPoint
 from fastapi import APIRouter, Request, Query
 from src.api.schemas import ConsensusResponse
+from fastapi import HTTPException
 
 
 router = APIRouter()
@@ -88,24 +89,31 @@ def get_forecast_anomalies(request: Request):
 @router.get("/forecast", response_model=ForecastResponse)
 def get_forecast(request: Request, days: int = Query(14, ge=1, le=90)):
 
-    forecast_df = request.app.state.analytics.forecast_full
-    forecast_residual_df = request.app.state.analytics.forecast_anomalies
+    try:
+        forecast_df = request.app.state.analytics.forecast_full
+        forecast_residual_df = request.app.state.analytics.forecast_anomalies
 
-    # Last actual historical date
-    last_actual_date = forecast_residual_df["ds"].max()
+        # Last actual historical date
+        last_actual_date = forecast_residual_df["ds"].max()
 
-    # Select strictly future rows
-    future_df = forecast_df[forecast_df["ds"] > last_actual_date]
+        # Select strictly future rows
+        future_df = forecast_df[forecast_df["ds"] > last_actual_date]
 
-    forecast_points = [
-        ForecastPoint(
-            date=row["ds"].strftime("%Y-%m-%d"),
-            predicted_revenue=float(row["yhat"])
+        forecast_points = [
+            ForecastPoint(
+                date=row["ds"].strftime("%Y-%m-%d"),
+                predicted_revenue=float(row["yhat"])
+            )
+            for _, row in future_df.head(days).iterrows()
+        ]
+
+        return ForecastResponse(forecast=forecast_points)
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Forecast endpoint failed: {str(e)}"
         )
-        for _, row in future_df.head(days).iterrows()
-    ]
-
-    return ForecastResponse(forecast=forecast_points)
 
 @router.get("/anomalies/consensus", response_model=ConsensusResponse)
 def get_anomaly_consensus(request: Request):
@@ -145,3 +153,4 @@ def get_anomaly_consensus(request: Request):
         overlap_ml_forecast=list(ml_set & forecast_set),
         triple_overlap=list(stat_set & ml_set & forecast_set)
     )
+

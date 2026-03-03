@@ -107,7 +107,7 @@ Interactive API Documentation:
 http://localhost:8000/docs
 
 ---
-
+```
 ## Architecture Overview
 
 ai_analytics_engine/
@@ -156,7 +156,7 @@ The system is modular and layered:
 2. Analytics Layer → Computes KPIs, anomalies, forecasts, and structured insights.  
 3. Multi-Model Consensus Layer → Confirms anomalies across statistical, ML, and forecasting systems.  
 4. Infrastructure Layer → Dockerized API service with reproducible runtime environment.
-
+```
 ---
 
 ## Running Locally
