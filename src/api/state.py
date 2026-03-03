@@ -1,7 +1,16 @@
 import pandas as pd
 
+import os
+from src.simulation.config import load_config
+from generate_data import main as generate_data_main
 from src.analytics.kpis import compute_kpis
 from src.analytics.anomaly_detection import detect_statistical_anomalies
+from dotenv import load_dotenv
+
+load_dotenv()
+
+DATA_PATH = os.getenv("DATA_PATH", "data")
+
 from src.analytics.ml_anomaly_detection import (
     build_daily_feature_matrix,
     detect_ml_anomalies
@@ -24,6 +33,13 @@ class AppState:
         self.forecast_anomalies = None
         self.forecast_full = None
 
+# -------------------------
+# Ensure data exists
+# -------------------------
+if not os.path.exists(f"{DATA_PATH}/orders.csv"):
+    print("Data not found. Generating simulation data...")
+    from generate_data import main as generate_data_main
+    generate_data_main()
 
 def load_and_compute_state() -> AppState:
     """
@@ -32,6 +48,13 @@ def load_and_compute_state() -> AppState:
     """
 
     state = AppState()
+
+    # -------------------------
+    # Ensure data exists
+    # -------------------------
+    if not os.path.exists(f"{DATA_PATH}/orders.csv"):
+     print("Data not found. Generating simulation data...")
+     generate_data_main()
 
     # -------------------------
     # Load data
