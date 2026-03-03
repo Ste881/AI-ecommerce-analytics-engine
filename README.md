@@ -1,66 +1,113 @@
 # AI-Powered Autonomous E-Commerce Analytics Engine
 
-## Overview
+## Executive Overview
 
-This project simulates a production-style internal analytics system for a mid-size D2C e-commerce company.
+This project implements and serves a production-style internal analytics backend for a mid-size D2C e-commerce company.
 
-It is designed to demonstrate end-to-end data engineering, analytics automation, forecasting, anomaly detection and deployment architecture.
+It includes:
 
-This is not a notebook project. It is a modular, production-oriented system.
+- Config-driven data simulation
+- KPI computation engine
+- Multi-model anomaly detection (Statistical + ML + Forecast residual)
+- Prophet-based time series forecasting
+- Structured LLM-ready insights with anomaly consensus logic
+- FastAPI backend with typed schemas
+- Fully containerized Docker deployment
 
----
+The system demonstrates end-to-end analytics engineering — from synthetic data generation to deployable production API infrastructure.
 
-## Business Problem
-
-E-commerce businesses often struggle to answer:
-
-- Why did revenue change week-over-week?
-- Which acquisition channels are underperforming?
-- Are unusual revenue spikes real or noise?
-- Are anomalies confirmed across multiple models?
-- What is the forward-looking revenue forecast?
-- Is actual revenue deviating from expected forecast behavior?
-
-This engine simulates how an internal analytics team would automate intelligence, monitoring, and anomaly confirmation.
+This is not a notebook project.  
+It is a modular, layered, production-oriented analytics engine.
 
 ---
 
-## Current Architecture
+## System Architecture
+
+The system follows a layered enterprise-style architecture:
+
+Simulation Layer → Analytics Layer → Multi-Model Consensus → API Layer → Containerization
 
 ### Simulation Layer
-
-- Config-driven data generation
-- Product simulation (pricing, cost, inventory)
-- Customer base simulation
-- Website traffic modeling (seasonality + monthly growth)
-- Dynamic conversion modeling (channel bias + seasonal variation)
-- Revenue shock injection (flash sale, outage simulation)
-- Deterministic random seed for reproducibility
+- YAML-based configuration control
+- Product catalog generation
+- Customer simulation
+- Website traffic modeling (seasonality + growth)
+- Conversion rate modeling with channel bias
+- Revenue event injection
+- Deterministic seed for reproducibility
 
 ### Analytics Layer
+- KPI computation (Revenue, AOV, Conversion Rate)
+- Channel performance analysis
+- Monthly revenue trend modeling
+- Rolling z-score anomaly detection
+- Isolation Forest ML anomaly detection
+- Prophet time-series forecasting
+- Residual-based anomaly detection
 
-- KPI computation engine
-- Revenue, AOV, conversion rate metrics
-- Channel performance breakdown
-- Monthly revenue trend analysis
-- Structured LLM-ready insight generation
+### Multi-Model Consensus Layer
+- Statistical ∩ ML overlap detection
+- ML ∩ Forecast overlap detection
+- Statistical ∩ Forecast overlap detection
+- Triple-confirmed anomaly detection
+- Automated critical alert generation
 
-### Anomaly Detection Systems
+This reduces false positives and mirrors enterprise monitoring systems.
 
-- Statistical anomaly detection (rolling mean + z-score)
-- ML anomaly detection (Isolation Forest with engineered daily features)
-- Forecast residual anomaly detection (Prophet-based time-series modeling)
-- Multi-model anomaly consensus logic (pairwise + triple overlap confirmation)
+### API Layer (FastAPI)
+- Typed Pydantic schemas
+- Startup precomputed analytics state
+- Drill-down anomaly endpoints
+- Forecast endpoint with validation constraints
+- Structured insight endpoint
+- Error handling and HTTP exception management
+- CORS middleware
+- Environment-based configuration via dotenv
 
-This system now simulates a full internal analytics intelligence pipeline:
-
-Traffic → Orders → KPIs → Anomaly Detection → Forecasting → Structured Insights
+### Infrastructure
+- Self-bootstrapping data generation
+- Docker containerization
+- Portable runtime
+- Reproducible execution environment
 
 ---
 
-## Project Structure
+## Multi-Model Anomaly Detection
 
-```
+This engine detects anomalies using three independent models:
+
+1. Statistical Rolling Z-Score
+2. Isolation Forest (ML-based)
+3. Prophet Forecast Residual Analysis
+
+The system computes overlap sets:
+
+- Statistical ∩ ML
+- ML ∩ Forecast
+- Statistical ∩ Forecast
+- Triple-confirmed anomalies
+
+Multi-model confirmation increases reliability and strengthens anomaly explainability.
+
+---
+
+## API Endpoints
+
+| Endpoint | Description |
+|----------|------------|
+| `/kpis` | Core performance metrics |
+| `/insights` | Structured executive insights |
+| `/forecast` | Future revenue forecast |
+| `/anomalies/statistical` | Rolling z-score anomalies |
+| `/anomalies/ml` | Isolation Forest anomalies |
+| `/anomalies/forecast` | Forecast residual anomalies |
+| `/anomalies/consensus` | Multi-model overlap analysis |
+
+Interactive API Documentation:
+http://localhost:8000/docs
+
+---
+
 ## Architecture Overview
 
 ai_analytics_engine/
@@ -102,34 +149,82 @@ ai_analytics_engine/
 ├── pytest.ini                         # Test configuration
 └── README.md
 
+
 The system is modular and layered:
 
-1. Simulation Layer → Generates realistic business data.
-2. Analytics Layer → Computes KPIs, anomalies, forecasts, and structured insights.
-3. Multi-Model Consensus Layer → Confirms anomalies across statistical, ML, and forecasting systems.
-4. Future Layer (Planned) → API service, database integration, dashboard, Dockerization.
+1. Simulation Layer → Generates realistic business data.  
+2. Analytics Layer → Computes KPIs, anomalies, forecasts, and structured insights.  
+3. Multi-Model Consensus Layer → Confirms anomalies across statistical, ML, and forecasting systems.  
+4. Infrastructure Layer → Dockerized API service with reproducible runtime environment.
 
-```
+---
+
+## Running Locally
+
+### Install Dependencies
+pip install -r requirements.txt
+
+### Start API
+uvicorn src.api.main:app --reload
+
+Open:
+http://localhost:8000/docs
+
+---
+
+## Running with Docker
+
+### Build Image
+docker build -t ai-analytics-engine .
+
+### Run Container
+docker run -p 8000:8000 ai-analytics-engine
+
+Open:
+http://localhost:8000/docs
+
+---
+
+## Example Structured Output
+{
+  "executive_summary": {
+    "total_revenue": 538828207.94,
+    "conversion_rate": 0.0227,
+    "top_channel": "Organic"
+  },
+  "anomaly_analysis": {
+    "triple_overlap": ["2025-03-15"]
+  },
+  "alerts": [
+    "Critical anomaly confirmed by statistical, ML, and forecasting models."
+  ]
+}
+
 
 ---
 
 ## Tech Stack
 
 - Python
-- NumPy
 - Pandas
-- PyYAML
-- Prophet (Time-Series Forecasting)
-- Scikit-learn (Isolation Forest)
-- Pytest
-- Structured LLM-ready JSON insight engine
-- Modular analytics architecture
+- NumPy
+- Scikit-Learn
+- Prophet
+- FastAPI
+- Pydantic
+- Docker
+- python-dotenv
 
 ---
 
-## Planned Infrastructure:
+## Why This Project Matters
 
-- FastAPI
-- PostgreSQL
-- Docker
-- Streamlit Dashboard
+This project demonstrates:
+
+- End-to-end analytics engineering
+- Multi-model anomaly detection with consensus validation
+- Forecast-driven residual anomaly confirmation
+- Production API architecture with typed schemas
+- Modular system design
+- Containerized backend deployment
+- Enterprise-grade analytics thinking
