@@ -14,7 +14,7 @@ It includes:
 - FastAPI backend with typed schemas
 - Fully containerized Docker deployment
 
-The system demonstrates end-to-end analytics engineering — from synthetic data generation to deployable production API infrastructure.
+The system demonstrates end-to-end analytics engineering from synthetic data generation to deployable production API infrastructure.
 
 This is not a notebook project.  
 It is a modular, layered, production-oriented analytics engine.
