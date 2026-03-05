@@ -34,6 +34,12 @@ class AppState:
         self.forecast_full = None
 
 # -------------------------
+# Ensure data directory exists
+# -------------------------
+
+os.makedirs(DATA_PATH, exist_ok=True)
+
+# -------------------------
 # Ensure data exists
 # -------------------------
 if not os.path.exists(f"{DATA_PATH}/orders.csv"):
