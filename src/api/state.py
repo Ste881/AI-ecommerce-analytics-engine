@@ -1,7 +1,6 @@
 import pandas as pd
 
 import os
-from src.simulation.config import load_config
 from generate_data import main as generate_data_main
 from src.analytics.kpis import compute_kpis
 from src.analytics.anomaly_detection import detect_statistical_anomalies
@@ -39,14 +38,6 @@ class AppState:
 
 os.makedirs(DATA_PATH, exist_ok=True)
 
-# -------------------------
-# Ensure data exists
-# -------------------------
-if not os.path.exists(f"{DATA_PATH}/orders.csv"):
-    print("Data not found. Generating simulation data...")
-    from generate_data import main as generate_data_main
-    generate_data_main()
-
 def load_and_compute_state() -> AppState:
     """
     Load CSV data and precompute all analytics outputs.
@@ -59,8 +50,9 @@ def load_and_compute_state() -> AppState:
     # Ensure data exists
     # -------------------------
     if not os.path.exists(f"{DATA_PATH}/orders.csv"):
-     print("Data not found. Generating simulation data...")
-     generate_data_main()
+        print("Data not found. Generating simulation data...")
+        from generate_data import main as generate_data_main
+        generate_data_main()
 
     # -------------------------
     # Load data

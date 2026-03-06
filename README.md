@@ -20,6 +20,9 @@ This is not a notebook project.
 It is a modular, layered, production-oriented analytics engine.
 
 ---
+## API Demo
+
+![API Demo](assets/api_demo.gif)
 
 ## System Architecture
 
