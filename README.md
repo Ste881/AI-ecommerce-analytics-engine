@@ -51,6 +51,7 @@ Simulation Layer → Analytics Layer → Multi-Model Consensus → API Layer →
 - Isolation Forest ML anomaly detection
 - Prophet time-series forecasting
 - Residual-based anomaly detection
+
 ![KPI Engine](assets/kpi_api.gif)
 ![Forecasting](assets/forecast_engine.gif)
 
