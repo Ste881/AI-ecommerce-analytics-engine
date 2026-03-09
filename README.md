@@ -41,7 +41,7 @@ Simulation Layer → Analytics Layer → Multi-Model Consensus → API Layer →
 - Revenue event injection
 - Deterministic seed for reproducibility\
 
-![](assets/simulation_pipeline.gif)
+![Simulation](assets/simulation_pipeline.gif)
 
 ### Analytics Layer
 - KPI computation (Revenue, AOV, Conversion Rate)
@@ -51,6 +51,7 @@ Simulation Layer → Analytics Layer → Multi-Model Consensus → API Layer →
 - Isolation Forest ML anomaly detection
 - Prophet time-series forecasting
 - Residual-based anomaly detection
+![KPI Engine](assets/kpi_api.gif)
 
 ### Multi-Model Consensus Layer
 - Statistical ∩ ML overlap detection
