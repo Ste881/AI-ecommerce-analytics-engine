@@ -62,6 +62,8 @@ Simulation Layer → Analytics Layer → Multi-Model Consensus → API Layer →
 
 This reduces false positives and mirrors enterprise monitoring systems.
 
+![Anomaly Detection](assets/anomaly_consensus.gif)
+
 ### API Layer (FastAPI)
 - Typed Pydantic schemas
 - Startup precomputed analytics state
