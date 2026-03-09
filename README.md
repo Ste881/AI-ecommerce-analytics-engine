@@ -76,6 +76,8 @@ This reduces false positives and mirrors enterprise monitoring systems.
 - CORS middleware
 - Environment-based configuration via dotenv
 
+![FastAPI interface](assets/fastapi_api.gif)
+
 ### Infrastructure
 - Self-bootstrapping data generation
 - Docker containerization
