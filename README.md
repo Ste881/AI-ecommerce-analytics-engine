@@ -24,6 +24,8 @@ It is a modular, layered, production-oriented analytics engine.
 
 ![API Demo](assets/api_demo.gif)
 
+---
+
 ## System Architecture
 
 The system follows a layered enterprise-style architecture:
@@ -37,7 +39,9 @@ Simulation Layer → Analytics Layer → Multi-Model Consensus → API Layer →
 - Website traffic modeling (seasonality + growth)
 - Conversion rate modeling with channel bias
 - Revenue event injection
-- Deterministic seed for reproducibility
+- Deterministic seed for reproducibility\
+
+![](assets/simulation_pipeline.gif)
 
 ### Analytics Layer
 - KPI computation (Revenue, AOV, Conversion Rate)
