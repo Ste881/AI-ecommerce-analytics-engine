@@ -84,6 +84,8 @@ This reduces false positives and mirrors enterprise monitoring systems.
 - Portable runtime
 - Reproducible execution environment
 
+![Docker Deployment](assets/docker_deployment.gif)
+
 ---
 
 ## Multi-Model Anomaly Detection
