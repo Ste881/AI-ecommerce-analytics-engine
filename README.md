@@ -172,6 +172,55 @@ The system is modular and layered:
 2. Analytics Layer → Computes KPIs, anomalies, forecasts, and structured insights.  
 3. Multi-Model Consensus Layer → Confirms anomalies across statistical, ML, and forecasting systems.  
 4. Infrastructure Layer → Dockerized API service with reproducible runtime environment.
+
+            ┌─────────────────────────────┐
+            │        Simulation Layer     │
+            │                             │
+            │  Products • Customers       │
+            │  Traffic Modeling           │
+            │  Conversion Modeling        │
+            │  Order Generation           │
+            └──────────────┬──────────────┘
+                           │
+                           ▼
+            ┌─────────────────────────────┐
+            │        Analytics Layer      │
+            │                             │
+            │  KPI Engine                 │
+            │  Revenue Metrics            │
+            │  Channel Performance        │
+            │  Seasonality Analysis       │
+            └──────────────┬──────────────┘
+                           │
+                           ▼
+            ┌─────────────────────────────┐
+            │       Intelligence Layer    │
+            │                             │
+            │  Statistical Anomaly Model  │
+            │  Isolation Forest Model     │
+            │  Prophet Forecast Model     │
+            │  Multi-Model Consensus      │
+            │  Insight Generation Engine  │
+            └──────────────┬──────────────┘
+                           │
+                           ▼
+            ┌─────────────────────────────┐
+            │          API Layer          │
+            │                             │
+            │  FastAPI                    │
+            │  Typed Pydantic Schemas     │
+            │  Drill-Down Endpoints       │
+            │  Swagger Documentation      │
+            └──────────────┬──────────────┘
+                           │
+                           ▼
+            ┌─────────────────────────────┐
+            │      Infrastructure Layer   │
+            │                             │
+            │  Docker Container           │
+            │  Reproducible Deployment    │
+            │  Portable Runtime           │
+            └─────────────────────────────┘
 ```
 ---
 
